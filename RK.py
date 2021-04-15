@@ -35,7 +35,7 @@ async def on_ready():
     print('Последний актёр на сцене')
     channel = Bot.get_channel(822463079580565517)
     emb = discord.Embed(
-                               title = 'Меттатон начинает свою премьеру!',
+                               title = 'Рукслс Каард проявляется из тьмы!',
                                colour = discord.Colour.from_rgb(123, 0, 216)
                               )
     await channel.send(embed = emb)
@@ -95,7 +95,7 @@ async def ban(ctx, member: discord.Member, cause):
             if role == 'Frisk':
                 emb = discord.Embed(
                                          title = 'Превышение полномочий',
-                                         description = f'Дорогуша, ты не можешь использовать эту команду.',
+                                         description = f'Светлый, ты не можешь использовать эту команду.',
                                          colour = discord.Colour.from_rgb(255, 0, 0)
                                          )
             
@@ -121,7 +121,7 @@ async def warn(ctx, member: discord.Member, cs):
             if role == 'Frisk':
                 emb = discord.Embed(
                                          title = 'Превышение полномочий',
-                                         description = f'Дорогуша, ты не можешь использовать эту команду.',
+                                         description = f'Светлый, ты не можешь использовать эту команду.',
                                          colour = discord.Colour.from_rgb(255, 0, 0)
                                          )
             
@@ -177,7 +177,7 @@ async def mute(ctx, member: discord.Member, cause):
             if role == 'Frisk':
                 emb = discord.Embed(
                                          title = 'Превышение полномочий',
-                                         description = f'Дорогуша, ты не можешь использовать эту команду.',
+                                         description = f'Светлый, ты не можешь использовать эту команду.',
                                          colour = discord.Colour.from_rgb(255, 0, 0)
                                          )
             
@@ -209,7 +209,7 @@ async def unmute(ctx, member: discord.Member):
             if role == 'Frisk':
                 emb = discord.Embed(
                                          title = 'Превышение полномочий',
-                                         description = f'Дорогуша, ты не можешь использовать эту команду.',
+                                         description = f'Светлый, ты не можешь использовать эту команду.',
                                          colour = discord.Colour.from_rgb(255, 0, 0)
                                          )
             
