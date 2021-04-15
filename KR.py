@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot
 from discord.utils import get
+import os
 
 special_roles = ['RP', 'Patience', 'Ink', 'XGaster', 'Determination']
 admin_roles = ['Patience', 'Ink', 'XGaster', 'Determination', 'Frisk']
@@ -216,4 +217,5 @@ async def unmute(ctx, member: discord.Member):
             else:
                 continue
         
-Bot.run(open('tocken.txt', 'r').readline()) 
+token = os.environ.get('rk_token')
+Bot.run(str(token))
