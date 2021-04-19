@@ -26,7 +26,7 @@ async def on_ready():
     guild_id = 822463079580565514
     guild = discord.utils.find(lambda g: g.id == guild_id, Bot.guilds)
     emb = discord.Embed(
-                               title = 'Меттатон начинает свою премьеру!',
+                               title = 'Рукслс Каард проявляется из тьмы!',
                                colour = discord.Colour.from_rgb(123, 0, 216)
                               )
     await channel.send(embed = emb)
@@ -145,7 +145,9 @@ async def help(ctx):
                                                     ~mute <Пользователь> <Причина> - лишение пользователя правѣ писать в чатѣ **(слова.разделяются.точкой)**\n
                                                     Пример: ***~mute anybody Оскорбление.Администрации***\n
                                                     ~unmute <Пользователь> - возвращение пользователю права писать в чатѣ\n
-                                                    Пример: ***~unmute anybody ***\n''',
+                                                    Пример: ***~unmute anybody ***\n
+                                                    Бот создан <@768074297192611861> 19.03.2021
+                                                    Обновление 1.1 (15.04.2021)''',
                                 colour = discord.Colour.from_rgb(231, 78, 255)
                                         )
             
