@@ -178,7 +178,7 @@ async def HP(ctx, hp, df):
         
     except:
         emb = discord.Embed(
-            title = 'Руклс заметилѣ ошибку!',
+            title = 'Рукслс заметилѣ ошибку!',
             description = f'Даны неверные аргументы!',
             colour = discord.Colour.from_rgb(255, 23, 0)
                                         )
