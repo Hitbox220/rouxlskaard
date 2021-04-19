@@ -10,62 +10,146 @@ roles = dict([])
 
 warn_list = dict([])
 
-a = '''data = open('warns_list.txt', 'r')
-warns = data.read()
-warns = warns.split('\n')
-
-warn_list = dict([])
-for i in range(0, len(warns)):
-    warns[i] = warns[i].split(' ')
-    warn_list[warns[i][0]] = warns[i][1:]
-
-print(warn_list)
-warn_list['768074297192611861'] = 'something'
-print(warn_list['768074297192611861'])
-print(warn_list['87'])'''
-
 five_seconds = 0
 mutelist = dict([])
 muteid = []
 
-Bot = commands.Bot(command_prefix = '~')
+Bot = commands.Bot(command_prefix='!')
+
+Bot.remove_command('help')
 
 @Bot.event
 async def on_ready():
+    global roles
     print('Последний актёр на сцене')
-    channel = Bot.get_channel(822463079580565517)
+    channel = Bot.get_channel(832476941843038208)
+    guild_id = 822463079580565514
+    guild = discord.utils.find(lambda g: g.id == guild_id, Bot.guilds)
     emb = discord.Embed(
-                               title = 'Рукслс Каард проявляется из тьмы!',
+                               title = 'Меттатон начинает свою премьеру!',
                                colour = discord.Colour.from_rgb(123, 0, 216)
                               )
     await channel.send(embed = emb)
+
+    roles = dict([
+        ['Muted', discord.utils.get(guild.roles, name = 'Muted')],
+        ['assistant_role', discord.utils.get(guild.roles, name = 'Тестировщик')],
+        ['diamond', discord.utils.get(guild.roles, name = 'Бубны')],
+        ['spade', discord.utils.get(guild.roles, name = 'Пики')],
+        ['heart', discord.utils.get(guild.roles, name = 'Черви')],
+        ['club', discord.utils.get(guild.roles, name = 'Трефы')],   
+        ['RP', discord.utils.get(guild.roles, name = 'RP')],
+        ['RP-muted', discord.utils.get(guild.roles, name = 'RP-muted')],
+        ['Patience', discord.utils.get(guild.roles, name = 'Patience')],
+        ['Patience-muted', discord.utils.get(guild.roles, name = 'Patience-muted')],
+        ['Ink', discord.utils.get(guild.roles, name = 'Ink')],
+        ['Ink-muted', discord.utils.get(guild.roles, name = 'Ink-muted')],
+        ['XGaster', discord.utils.get(guild.roles, name = 'XGaster')],
+        ['XGaster-muted', discord.utils.get(guild.roles, name = 'XGaster-muted')],
+        ['Determination', discord.utils.get(guild.roles, name = 'Determination')],
+        ['Determination-muted', discord.utils.get(guild.roles, name = 'Determination-muted')],
+        ['Frisk', discord.utils.get(guild.roles, name = 'Frisk')],
+        ['Frisk-muted', discord.utils.get(guild.roles, name = 'Frisk-muted')],
+    ])
+#    print(roles)
+    print('roles was loaded')
 
 @Bot.event
 async def on_member_remove(member: discord.member):
     channel = Bot.get_channel(822463079580565517)
     await channel.send(f'<@{member.id}>. Будем ждать тебя снова!')
 
-@Bot.command()
-async def load_roles(ctx):
+@Bot.event
+async def on_raw_reaction_add(payload):
     global roles
-    
-    roles = dict([
-            ['Muted', discord.utils.get(ctx.message.guild.roles, name = 'Muted')],
-            ['assistant_role', discord.utils.get(ctx.message.guild.roles, name = 'Тестировщик')],
-            ['RP', discord.utils.get(ctx.message.guild.roles, name = 'RP')],
-            ['RP-muted', discord.utils.get(ctx.message.guild.roles, name = 'RP-muted')],
-            ['Patience', discord.utils.get(ctx.message.guild.roles, name = 'Patience')],
-            ['Patience-muted', discord.utils.get(ctx.message.guild.roles, name = 'Patience-muted')],
-            ['Ink', discord.utils.get(ctx.message.guild.roles, name = 'Ink')],
-            ['Ink-muted', discord.utils.get(ctx.message.guild.roles, name = 'Ink-muted')],
-            ['XGaster', discord.utils.get(ctx.message.guild.roles, name = 'XGaster')],
-            ['XGaster-muted', discord.utils.get(ctx.message.guild.roles, name = 'XGaster-muted')],
-            ['Determination', discord.utils.get(ctx.message.guild.roles, name = 'Determination')],
-            ['Determination-muted', discord.utils.get(ctx.message.guild.roles, name = 'Determination-muted')],
-            ['Frisk', discord.utils.get(ctx.message.guild.roles, name = 'Frisk')],
-            ['Frisk-muted', discord.utils.get(ctx.message.guild.roles, name = 'Frisk-muted')],
-        ])
-    print('roles was loaded')
+    print('+')
+    message_id = payload.message_id
+    guild_id = 822463079580565514
+    guild = discord.utils.find(lambda g: g.id == guild_id, Bot.guilds)
+    if message_id == 833561961978921041:
+        
+        if payload.emoji.name == 'spaded':
+            role = roles['spade']
+            
+        elif payload.emoji.name == 'diamonded':
+            role = roles['diamond']
+
+        elif payload.emoji.name == 'hearted':
+            role = roles['heart']
+            
+        elif payload.emoji.name == 'clubed':
+            role = roles['club']
+
+        else:
+            role = None
+
+        if role is not None:
+            member = payload.member
+            print(member)
+            if member is not None:
+                for i in ['Черви', 'Пики', 'Трефы', 'Бубны']:
+                    if get(member.roles, name = i):
+                        print('Больше 1 роли')
+                        break
+                    elif i == 'Бубны':
+                        await member.add_roles(role)
+                        print('выполнено')
+            else:
+                print('участник не найден')
+        else:
+            print('роль не найдена')
+            
+@Bot.event
+async def on_raw_reaction_remove(payload):
+    global roles
+    print('-')
+    message_id = payload.message_id
+    guild_id = 822463079580565514
+    guild = discord.utils.find(lambda g: g.id == guild_id, Bot.guilds)
+    if message_id == 833561961978921041:
+        
+        if payload.emoji.name == 'spaded':
+            role = roles['spade']
+            
+        elif payload.emoji.name == 'diamonded':
+            role = roles['diamond']
+
+        elif payload.emoji.name == 'hearted':
+            role = roles['heart']
+            
+        elif payload.emoji.name == 'clubed':
+            role = roles['club']
+
+        else:
+            role = None
+
+        if role is not None:
+            member = discord.utils.find(lambda m : m.id == payload.user_id, guild.members)
+            print(member)
+            if member is not None:
+                await member.remove_roles(role)
+                print('выполнено')
+            else:
+                print('участник не найден')
+        else:
+            print('роль не найдена')
+
+@Bot.command()
+async def help(ctx):
+    emb = discord.Embed(
+                                title = 'Список всех команд',
+                                description = '''~HP <озѣ> <защита> - расчётѣ суммарного озѣ с защитой\n
+                                                    Пример: ***~HP 10 30*** \n
+                                                    ~ban <Пользователь> <Причина> - Банѣ пользователя **(слова.разделяются.точкой)**\n
+                                                    Пример: ***~ban anybody Оскорбление.Администрации*** \n
+                                                    ~mute <Пользователь> <Причина> - лишение пользователя правѣ писать в чатѣ **(слова.разделяются.точкой)**\n
+                                                    Пример: ***~mute anybody Оскорбление.Администрации***\n
+                                                    ~unmute <Пользователь> - возвращение пользователю права писать в чатѣ\n
+                                                    Пример: ***~unmute anybody ***\n''',
+                                colour = discord.Colour.from_rgb(231, 78, 255)
+                                        )
+            
+    await ctx.send(embed = emb)  
 
 @Bot.command()
 async def assistant(ctx, member: discord.Member):
@@ -78,14 +162,36 @@ async def deb(ctx, member: discord.Member):
     print(warn_list)
 
 @Bot.command()
+async def HP(ctx, hp, df):
+    print(hp, df)
+    try:
+        hps = int(hp)
+        dfs = int(df)
+        emb = discord.Embed(
+            title = 'Великикй герцогѣ решилѣ эту небольшую задачу',
+            description = f'Суммарное озѣ: {(100/(100-dfs))*hps}\nЗащита: {dfs}, Озѣ безѣ защиты: {hps}',
+            colour = discord.Colour.from_rgb(100, 255, 100)
+                                        )
+        await ctx.send(embed = emb)
+        
+    except:
+        emb = discord.Embed(
+            title = 'Руклс заметилѣ ошибку!',
+            description = f'Даны неверные аргументы!',
+            colour = discord.Colour.from_rgb(255, 23, 0)
+                                        )
+        await ctx.send(embed = emb)
+            
+@Bot.command()
 async def ban(ctx, member: discord.Member, cause):
+    caused = cause.replace('.', ' ')
     author = ctx.author
     for role in admin_roles:
         if get(author.roles, name = role):
             await ctx.guild.ban(member, reason=cause)
             emb = discord.Embed(
                                 title = 'Бан пользоваетля',
-                                description = f'Пользователь <@{member.id}> был забанен: \nПричина: {cause}',
+                                description = f'Пользователь <@{member.id}> был забанен: \nПричина: {caused}',
                                 colour = discord.Colour.from_rgb(255, 0, 0)
                                 )
             await ctx.send(embed = emb)
@@ -95,7 +201,7 @@ async def ban(ctx, member: discord.Member, cause):
             if role == 'Frisk':
                 emb = discord.Embed(
                                          title = 'Превышение полномочий',
-                                         description = f'Светлый, ты не можешь использовать эту команду.',
+                                         description = f'Дорогуша, ты не можешь использовать эту команду.',
                                          colour = discord.Colour.from_rgb(255, 0, 0)
                                          )
             
@@ -121,7 +227,7 @@ async def warn(ctx, member: discord.Member, cs):
             if role == 'Frisk':
                 emb = discord.Embed(
                                          title = 'Превышение полномочий',
-                                         description = f'Светлый, ты не можешь использовать эту команду.',
+                                         description = f'Дорогуша, ты не можешь использовать эту команду.',
                                          colour = discord.Colour.from_rgb(255, 0, 0)
                                          )
             
@@ -153,12 +259,13 @@ async def warn_list(ctx):
 @Bot.command()
 async def mute(ctx, member: discord.Member, cause):
     global special_roles, roles, perms
+    caused = cause.replace('.', ' ')
     author = ctx.author
     for role in admin_roles:
         if get(author.roles, name = role):
             emb = discord.Embed(
                                             title = 'Мьют пользоваетля',
-                                           description = f'Пользователь <@{member.id}> был лишён права писать в чат: \nПричина: {cause}',
+                                           description = f'Пользователь <@{member.id}> был лишён права писать в чат: \nПричина: {caused}',
                                            colour = discord.Colour.from_rgb(255, 0, 0)
                                            )
             for role in special_roles:
@@ -177,7 +284,7 @@ async def mute(ctx, member: discord.Member, cause):
             if role == 'Frisk':
                 emb = discord.Embed(
                                          title = 'Превышение полномочий',
-                                         description = f'Светлый, ты не можешь использовать эту команду.',
+                                         description = f'Дорогуша, ты не можешь использовать эту команду.',
                                          colour = discord.Colour.from_rgb(255, 0, 0)
                                          )
             
@@ -209,7 +316,7 @@ async def unmute(ctx, member: discord.Member):
             if role == 'Frisk':
                 emb = discord.Embed(
                                          title = 'Превышение полномочий',
-                                         description = f'Светлый, ты не можешь использовать эту команду.',
+                                         description = f'Дорогуша, ты не можешь использовать эту команду.',
                                          colour = discord.Colour.from_rgb(255, 0, 0)
                                          )
             
