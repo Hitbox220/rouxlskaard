@@ -14,7 +14,7 @@ five_seconds = 0
 mutelist = dict([])
 muteid = []
 
-Bot = commands.Bot(command_prefix='!')
+Bot = commands.Bot(command_prefix='~')
 
 Bot.remove_command('help')
 
